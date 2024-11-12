@@ -1,0 +1,79 @@
+rogue light
+
+nom du jeu : tiphereth
+
+
+- menu home
+
+    . play
+
+    . settings
+
+    . quit
+
+- menu de selection de perso
+
+    . new game
+
+    . load
+
+
+
+- gameplay
+
+
+    . shop avant game (possibilité d'achat buff/debuff)
+
+    . inventaire
+
+    . systeme monaitaire
+
+    . si round 1 win gros gigachad qui spawn
+
+    . """"skin""""
+
+    . save
+ 
+    -- in game --
+    
+    (mode de jeu 1)
+
+        . perso a gauche, ennemy a droite 
+
+        . ennemy attaquant en haut bas gauche droite
+
+        . ennemy a parterne random
+
+        . duff debuff
+        
+        . nain portuguais protecteur (bouclier d'undyne)
+
+        . differentes armes
+
+    (mode de jeu 2)
+
+
+
+    (mode de jeu 3)
+
+        . side scroller (haut vers bas)
+
+        . 3 collones
+
+        .se deplacer de droite a gauche
+
+        . vu top-down
+
+        . buff/debuff
+
+    (mode de jeu 4)
+        
+        . combat dynamique (comme dans un rpg type zelda)
+
+        . buff/debuff
+
+    
+
+
+
+    
