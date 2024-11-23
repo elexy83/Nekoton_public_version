@@ -1,9 +1,6 @@
 #ifndef GRAPHICS_SETTINGS_HPP
     #define GRAPHICS_SETTINGS_HPP
-    #include <SFML/Graphics.hpp>
-    #include <SFML/Audio.hpp>
-    #include <SFML/System.hpp>
-    #include <SFML/Window.hpp>
+   
 
 class Graphics_settings
 {

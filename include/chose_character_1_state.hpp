@@ -1,6 +1,5 @@
 #ifndef CHOSE_CHARACTER_1_STATE_HPP
     #define CHOSE_CHARACTER_1_STATE_HPP
-    #include "game_mode_1_state.hpp"
     #include "gui.hpp"
     #include "graphics_settings.hpp"
     #include "settings_state.hpp"

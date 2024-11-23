@@ -1,7 +1,7 @@
 #include "../include/stdafx.hpp"
-#include "../include/chose_character_4_state.hpp"
 #include "../include/chose_character_1_state.hpp"
 #include "../include/chose_character_3_state.hpp"
+#include "../include/chose_character_4_state.hpp"
 #include "../include/main_menu_state.hpp"
 
 
@@ -43,7 +43,7 @@ void chose_character_4_state::render(sf::RenderTarget* target)
 
 void chose_character_4_state::update_input(const float &dt)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->key_binds.at("Close")))&& this->get_key_time()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->key_binds.at("Close"))) && this->get_key_time()) {
         this->states->push(new main_menu_state(this->state_data));
     }  
 }
@@ -59,16 +59,16 @@ void chose_character_4_state::update_button()
         this->states->push(new main_menu_state(this->state_data));
     }
 
-    if (this->buttons["GAMEMODE_4_STATE"]->is_pressed() && this->get_key_time()) {
-        this->states->push(new game_mode_4_state(this->state_data));
+    // if (this->buttons["GAMEMODE_4_STATE"]->is_pressed() && this->get_key_time()) {
+    //     this->states->push(new game_state(this->state_data));
+    // }
+
+    if (this->buttons["CHOOSE_GAMEMODE_3_STATE"]->is_pressed() && this->get_key_time()) {
+        this->states->push(new chose_character_3_state(this->state_data));
     }
 
     if (this->buttons["CHOOSE_GAMEMODE_1_STATE"]->is_pressed() && this->get_key_time()) {
         this->states->push(new chose_character_1_state(this->state_data));
-    }
-
-    if (this->buttons["CHOOSE_GAMEMODE_3_STATE"]->is_pressed() && this->get_key_time()) {
-        this->states->push(new chose_character_3_state(this->state_data));
     }
 }
 
@@ -99,7 +99,7 @@ void chose_character_4_state::init_key_binds()
 void chose_character_4_state::init_font()
 {
     if (!this->font.loadFromFile("fonts/Lato-Bold.ttf")) {
-        throw("ERROR IN CHOSE_CHARACTER_4_STATE : can not load font");
+        throw("ERROR IN CHOSE_CHARACTER_2_STATE : can not load font");
     }
 }
 

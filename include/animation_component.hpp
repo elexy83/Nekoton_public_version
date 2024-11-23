@@ -1,10 +1,5 @@
 #ifndef ANIMATION_COMPONENT_HPP
-    #define ANIMATION_COMPONENT_HPP
-    #include <SFML/Graphics.hpp>
-    #include <SFML/Audio.hpp>
-    #include <SFML/System.hpp>
-    #include <SFML/Window.hpp>
-   
+    #define ANIMATION_COMPONENT_HPP   
 
     class Animation_component
     {

@@ -3,19 +3,17 @@
 #include "../include/graphics_settings.hpp"
 
 
-
-
-
-
 Editor_state::Editor_state(State_data* state_data)
     :state(state_data)
 {
-    this->init_font();  
+    this->init_variables();
+    this->init_font();
+    this->init_text();
     this->init_key_binds();
     this->init_paused_menu();
     this->init_button();
-    this->init_gui();
     this->init_tile_map();
+    this->init_gui();
 }
 
 Editor_state::~Editor_state()
@@ -26,6 +24,7 @@ Editor_state::~Editor_state()
     }
     delete this->p_menu;
     delete this->tile_map;
+    delete this->texture_selector;
 }
 
 void Editor_state::update(const float &dt)
@@ -38,6 +37,7 @@ void Editor_state::update(const float &dt)
     {
         this->update_button();
         this->update_gui();
+        this->update_editor_input(dt);
     }
     else
     {
@@ -53,17 +53,18 @@ void Editor_state::render(sf::RenderTarget* target)
     if (!target) {
         target = this->window;
     }
-    this->render_button(*target);
-    this->render_gui(*target);
+    
 
     this->tile_map->render(*target);
+
+    this->render_button(*target);
+    this->render_gui(*target);
 
     if (this->paused)
     {
         this->p_menu->render(*target);
-        this->update_pause_menu_buttons();
     }
-  
+    
 }
 
 void Editor_state::update_input(const float &dt)
@@ -77,10 +78,24 @@ void Editor_state::update_input(const float &dt)
     }
 }
 
+
 void Editor_state::update_gui()
 {
-    this->selector_rect.setPosition(this->mouse_pos_grid.x * this->state_data->grid_size, this->mouse_pos_grid.y * this->state_data->grid_size);
+    std::stringstream ss;
+    this->texture_selector->update(this->mouse_pose_window);
+    if(!this->texture_selector->get_active())
+    {
+        this->selector_rect.setTextureRect(this->texture_rect);
+        this->selector_rect.setPosition(this->mouse_pos_grid.x * this->state_data->grid_size, this->mouse_pos_grid.y * this->state_data->grid_size);
+    }
+
+    this->cursor_text.setPosition(this->mouse_pose_view.x + 100.f, this->mouse_pose_view.y - 50.f);
+    ss << this->mouse_pose_view.x << " " << this->mouse_pose_view.y <<
+        "\n" << this->mouse_pos_grid.x << " " << this->mouse_pos_grid.y <<
+        "\n" << this->texture_rect.left << " " << this->texture_rect.top;
+    this->cursor_text.setString(ss.str());    
 }
+
 
 void Editor_state::update_button()
 {
@@ -90,6 +105,30 @@ void Editor_state::update_button()
     }
 }
 
+
+void Editor_state::update_editor_input(const float &dt)
+{
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->get_key_time())
+    {   
+        if(!this->texture_selector->get_active())
+        {
+            this->tile_map->add_tile(this->mouse_pos_grid.x, this->mouse_pos_grid.y, 0, this->texture_rect);
+        }
+        else
+        {
+            this->texture_rect = this->texture_selector->get_texture_rect();
+        }
+    }
+    else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->get_key_time())
+    {   
+        if(!this->texture_selector->get_active())
+        {
+            this->tile_map->remove_tile(this->mouse_pos_grid.x, this->mouse_pos_grid.y, 0);
+        }
+    }
+}
+
+
 void Editor_state::render_button(sf::RenderTarget &target)
 {
      for (auto it : this->buttons)
@@ -98,10 +137,17 @@ void Editor_state::render_button(sf::RenderTarget &target)
     }
 }
 
+
 void Editor_state::render_gui(sf::RenderTarget &target)
 {
-    target.draw(this->selector_rect);
+
+    if (!this->texture_selector->get_active())
+        target.draw(this->selector_rect);
+
+    this->texture_selector->render(target);
+    target.draw(this->cursor_text);
 }
+
 
 void Editor_state::update_pause_menu_buttons()
 {
@@ -151,12 +197,30 @@ void Editor_state::init_gui()
 {
     this->selector_rect.setSize(sf::Vector2f(this->state_data->grid_size, this->state_data->grid_size));
 
-    this->selector_rect.setFillColor(sf::Color::Transparent);
+    this->selector_rect.setFillColor(sf::Color(255, 255, 255, 150));
     this->selector_rect.setOutlineThickness(1.f);
     this->selector_rect.setOutlineColor(sf::Color::Green);
+
+    this->selector_rect.setTexture(this->tile_map->get_tile_sheet());
+    this->selector_rect.setTextureRect(this->texture_rect);
+
+    this->texture_selector = new gui::Texture_selector(500.f, 20.f, 512.f, 512.f, this->state_data->grid_size ,this->tile_map->get_tile_sheet());
 }
 
 void Editor_state::init_tile_map()
 {
     this->tile_map = new Tile_map(this->state_data->grid_size, 10, 10);
+}
+
+void Editor_state::init_variables()
+{
+    this->texture_rect = sf::IntRect(0, 0, static_cast<int>(this->state_data->grid_size), static_cast<int>(this->state_data->grid_size));
+}
+
+void Editor_state::init_text()
+{
+    this->cursor_text.setFont(this->font);
+    this->cursor_text.setFillColor(sf::Color::White);
+    this->cursor_text.setCharacterSize(12);
+    this->cursor_text.setPosition(this->mouse_pose_view.x, this->mouse_pose_view.y);
 }

@@ -22,6 +22,7 @@
             void update_input(const float &dt);
             void update_gui();
             void update_button();
+            void update_editor_input(const float& dt);
             void render_button(sf::RenderTarget &target);
             void render_gui(sf::RenderTarget &target);
             void update_pause_menu_buttons();
@@ -32,15 +33,23 @@
             Pause_menu* p_menu;
             Tile_map *tile_map;
 
+            sf::Text cursor_text;
+
             sf::RectangleShape selector_rect;
+            sf::IntRect texture_rect;
             
             std::map<std::string, gui::button*> buttons;
+
+            gui::Texture_selector *texture_selector;
+
             void init_key_binds();
             void init_font();
             void init_button();
             void init_paused_menu();
             void init_gui();
             void init_tile_map();
+            void init_variables();
+            void init_text();
     };
 
 #endif

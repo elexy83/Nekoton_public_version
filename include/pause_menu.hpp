@@ -1,9 +1,6 @@
 #ifndef PAUSE_MENU_HPP
     #define PAUSE_MENU_HPP
-    #include <SFML/Graphics.hpp>
-    #include <SFML/Audio.hpp>
-    #include <SFML/System.hpp>
-    #include <SFML/Window.hpp>
+    
     #include "gui.hpp"
 
     class Pause_menu

@@ -64,6 +64,6 @@ void state::update_key_time(const float &dt)
 {
     if (this->key_time < this->key_time_max)
     {
-        this->key_time += 60.f * dt;
+        this->key_time += 50.f * dt;
     }
 }

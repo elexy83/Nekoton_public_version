@@ -2,9 +2,6 @@
 #include "../include/game.hpp"
 #include "../include/main_menu_state.hpp"
 
-
-
-
 game::game()
 {
     this->init_variables();

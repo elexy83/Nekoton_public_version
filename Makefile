@@ -2,11 +2,11 @@ CXX = g++
 
 FILE = main.cpp \
 		dwarf.cpp \
-		character_4.cpp \
+		character_2.cpp \
 		state.cpp \
 		game.cpp \
 		game_mode_1_state.cpp \
-		game_mode_4_state.cpp \
+		game_mode_2_state.cpp \
 		main_menu_state.cpp \
 		gui.cpp \
 		chose_character_1_state.cpp \

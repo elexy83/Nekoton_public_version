@@ -1,16 +1,12 @@
 #ifndef TILE_HPP
     #define TILE_HPP
-    #include <SFML/Graphics.hpp>
-    #include <SFML/Audio.hpp>
-    #include <SFML/System.hpp>
-    #include <SFML/Window.hpp>
     #include "gui.hpp"
 
     class Tile
     {
         public:
             Tile();
-            Tile(float x, float y, float grid_size_f);
+            Tile(float x, float y, float grid_size_f, const sf::Texture& texture, const sf::IntRect& texture_rect);
             virtual ~Tile();
 
             void update();

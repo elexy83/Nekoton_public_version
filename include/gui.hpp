@@ -1,9 +1,6 @@
 #ifndef GUI_HPP
     #define GUI_HPP
-    #include <SFML/Graphics.hpp>
-    #include <SFML/Audio.hpp>
-    #include <SFML/System.hpp>
-    #include <SFML/Window.hpp>
+    
    
 
     enum button_states
@@ -72,7 +69,31 @@ namespace gui
             bool show_list;
             float key_time;
             float key_time_max;
-    };   
+    };
+
+    class Texture_selector
+    {
+        public:
+
+            Texture_selector(float x, float y, float width, float height, float grid_size, const sf::Texture* texture_sheet);
+            ~Texture_selector();
+
+            void update(const sf::Vector2i& mouse_pos_window);
+            void render(sf::RenderTarget &target);
+
+            const bool& get_active() const;
+            const sf::IntRect& get_texture_rect() const;
+
+        private:
+
+            sf::RectangleShape bounds;
+            sf::Sprite sheet;
+            sf::RectangleShape selector;
+            sf::Vector2u mouse_pos_grid;
+            sf::IntRect texture_rect;
+            float grid_size;
+            bool active;
+    };
 }
     
 #endif
