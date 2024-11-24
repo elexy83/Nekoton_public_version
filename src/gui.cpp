@@ -3,6 +3,7 @@
 
 
 
+
 gui::button::button(float x, float y, float width, float height,
     sf::Font *font, std::string text, float text_size,
     sf::Color idle_color, sf::Color hover_color, sf::Color active_color, short unsigned id)
@@ -212,11 +213,13 @@ void gui::Drop_down_list::update_key_time(const float &dt)
 
 //===================================================================================
 
-gui::Texture_selector::Texture_selector(float x, float y, float width, float height, float grid_size, const sf::Texture *texture_sheet)
+gui::Texture_selector::Texture_selector(float x, float y, float width, float height, float grid_size, const sf::Texture *texture_sheet, sf::Font &font, std::string text)
+    : key_time_max(10.f), key_time(0.f)
 {
-
     this->grid_size = grid_size;
     this->active = false;
+    this->hidden = false;
+    float offset = 60.f;
 
     this->bounds.setSize(sf::Vector2f(width, height));
     this->bounds.setPosition(x, y);
@@ -245,42 +248,67 @@ gui::Texture_selector::Texture_selector(float x, float y, float width, float hei
 
     this->texture_rect.width = static_cast<int>(grid_size);
     this->texture_rect.height = static_cast<int>(grid_size);
+
+    this->hide_btn = new gui::button(
+        20.f, 20.f, 50.f, 50.f, &font,
+       text, 25, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200)
+    );
 }
 
 gui::Texture_selector::~Texture_selector()
 {
-
+    delete this->hide_btn;
 }
 
-void gui::Texture_selector::update(const sf::Vector2i& mouse_pos_window)
+void gui::Texture_selector::update(const sf::Vector2i& mouse_pos_window, const float& dt)
 {
+    this->update_key_time(dt);
+    this->hide_btn->update(static_cast<sf::Vector2f>(mouse_pos_window));
 
-    if (this->bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouse_pos_window)))
-        this->active = true;
-    else
-        this->active = false;
-
-    
-    if (this->active)
+    if (this->hide_btn->is_pressed() && this->get_key_time())
     {
-        this->mouse_pos_grid.x = (mouse_pos_window.x - static_cast<int>(this->bounds.getPosition().x)) / static_cast<unsigned>(this->grid_size);
-        this->mouse_pos_grid.y = (mouse_pos_window.y - static_cast<int>(this->bounds.getPosition().y)) / static_cast<unsigned>(this->grid_size);
-        this->selector.setPosition(
-            this->bounds.getPosition().x + this->mouse_pos_grid.x * this->grid_size,
-            this->bounds.getPosition().y + this->mouse_pos_grid.y * this->grid_size);
+        if (this->hidden)
+        {
+            this->hidden = false;
+        } else {
+            this->hidden = true;
+        }
+    }
 
-        this->texture_rect.left = static_cast<int>(this->selector.getPosition().x - this->bounds.getPosition().x);
-        this->texture_rect.top = static_cast<int>(this->selector.getPosition().y - this->bounds.getPosition().y);
+    if (!this->hidden)
+    {
+        if (this->bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouse_pos_window)))
+            this->active = true;
+        else
+            this->active = false;
+
+        
+        if (this->active)
+        {
+            this->mouse_pos_grid.x = (mouse_pos_window.x - static_cast<int>(this->bounds.getPosition().x)) / static_cast<unsigned>(this->grid_size);
+            this->mouse_pos_grid.y = (mouse_pos_window.y - static_cast<int>(this->bounds.getPosition().y)) / static_cast<unsigned>(this->grid_size);
+            this->selector.setPosition(
+                this->bounds.getPosition().x + this->mouse_pos_grid.x * this->grid_size,
+                this->bounds.getPosition().y + this->mouse_pos_grid.y * this->grid_size);
+
+            this->texture_rect.left = static_cast<int>(this->selector.getPosition().x - this->bounds.getPosition().x);
+            this->texture_rect.top = static_cast<int>(this->selector.getPosition().y - this->bounds.getPosition().y);
+        }
     }
 }
 
 void gui::Texture_selector::render(sf::RenderTarget &target)
 {
-    target.draw(this->bounds);
-    target.draw(this->sheet);
 
-    if (this->active)
-        target.draw(this->selector);
+    if(!this->hidden)
+    {
+        target.draw(this->bounds);
+        target.draw(this->sheet);
+
+        if (this->active)
+            target.draw(this->selector);
+    }
+    this->hide_btn->render(target);
 }
 
 const bool &gui::Texture_selector::get_active() const
@@ -291,4 +319,20 @@ const bool &gui::Texture_selector::get_active() const
 const sf::IntRect &gui::Texture_selector::get_texture_rect() const
 {
     return this->texture_rect;
+}
+
+void gui::Texture_selector::update_key_time(const float &dt)
+{
+    if (this->key_time < this->key_time_max)
+        this->key_time += 50.f * dt;
+}
+
+const bool gui::Texture_selector::get_key_time()
+{
+    if (this->key_time >= this->key_time_max)
+    {
+        this->key_time = 0.f;
+        return true;
+    }
+    return false;
 }

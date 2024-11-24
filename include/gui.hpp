@@ -1,7 +1,6 @@
 #ifndef GUI_HPP
     #define GUI_HPP
-    
-   
+
 
     enum button_states
     {
@@ -46,7 +45,7 @@ namespace gui
     };
 
 
-//=================================================
+//================================================================================
 
 
     class Drop_down_list
@@ -71,28 +70,40 @@ namespace gui
             float key_time_max;
     };
 
+
+
+//=======================================================================
+
+
     class Texture_selector
     {
         public:
 
-            Texture_selector(float x, float y, float width, float height, float grid_size, const sf::Texture* texture_sheet);
+            Texture_selector(float x, float y, float width, float height, float grid_size, const sf::Texture* texture_sheet, sf::Font &font, std::string text);
             ~Texture_selector();
 
-            void update(const sf::Vector2i& mouse_pos_window);
+            void update(const sf::Vector2i& mouse_pos_window, const float &dt);
             void render(sf::RenderTarget &target);
 
             const bool& get_active() const;
             const sf::IntRect& get_texture_rect() const;
 
+            void update_key_time(const float &dt);
+            const bool get_key_time();
+
         private:
 
             sf::RectangleShape bounds;
+            float key_time;
+            const float key_time_max;
             sf::Sprite sheet;
             sf::RectangleShape selector;
             sf::Vector2u mouse_pos_grid;
             sf::IntRect texture_rect;
             float grid_size;
             bool active;
+            bool hidden;
+            gui::button* hide_btn;
     };
 }
     

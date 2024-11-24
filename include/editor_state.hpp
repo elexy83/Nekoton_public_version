@@ -20,7 +20,7 @@
             void update(const float &dt);
             void render(sf::RenderTarget *target = nullptr);
             void update_input(const float &dt);
-            void update_gui();
+            void update_gui(const float &dt);
             void update_button();
             void update_editor_input(const float& dt);
             void render_button(sf::RenderTarget &target);
@@ -41,6 +41,8 @@
             std::map<std::string, gui::button*> buttons;
 
             gui::Texture_selector *texture_selector;
+
+            sf::RectangleShape side_bar;
 
             void init_key_binds();
             void init_font();

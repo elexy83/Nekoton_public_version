@@ -7,7 +7,7 @@
     {
         public: 
 
-            Tile_map(float grid_size_f, unsigned width, unsigned height);
+            Tile_map(float grid_size_f, unsigned width, unsigned height, std::string texture_file);
             virtual ~Tile_map();
 
             void update();
@@ -18,11 +18,16 @@
 
             const sf::Texture* get_tile_sheet() const ;
 
+            void save_to_file(const std::string file_name);
+            void load_from_file(const std::string file_name);
+
         private:
 
+            void clear();
             unsigned grid_size_u;
             float grid_size_f;
             unsigned layers;
+            std::string texture_file;
             std::vector<std::vector<std::vector<Tile *>>> map;
             sf::Vector2u max_size;
             sf::Texture tile_sheet;

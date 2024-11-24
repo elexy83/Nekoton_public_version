@@ -131,7 +131,7 @@ void game_mode_2_state::init_character()
 
 void game_mode_2_state::init_tile_map()
 {
-    this->tile_map = new Tile_map(this->state_data->grid_size, 10, 10);
+    this->tile_map = new Tile_map(this->state_data->grid_size, 10, 10, "assets/Map01.png");
 }
 
 void game_mode_2_state::init_font()

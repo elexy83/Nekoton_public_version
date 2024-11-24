@@ -36,7 +36,7 @@ void Editor_state::update(const float &dt)
     if(!this->paused)
     {
         this->update_button();
-        this->update_gui();
+        this->update_gui(dt);
         this->update_editor_input(dt);
     }
     else
@@ -79,10 +79,10 @@ void Editor_state::update_input(const float &dt)
 }
 
 
-void Editor_state::update_gui()
+void Editor_state::update_gui(const float& dt)
 {
     std::stringstream ss;
-    this->texture_selector->update(this->mouse_pose_window);
+    this->texture_selector->update(this->mouse_pose_window, dt);
     if(!this->texture_selector->get_active())
     {
         this->selector_rect.setTextureRect(this->texture_rect);
@@ -110,20 +110,26 @@ void Editor_state::update_editor_input(const float &dt)
 {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->get_key_time())
     {   
-        if(!this->texture_selector->get_active())
+        if (!this->side_bar.getGlobalBounds().contains(sf::Vector2f(this->mouse_pose_window)))
         {
-            this->tile_map->add_tile(this->mouse_pos_grid.x, this->mouse_pos_grid.y, 0, this->texture_rect);
-        }
-        else
-        {
-            this->texture_rect = this->texture_selector->get_texture_rect();
+            if(!this->texture_selector->get_active())
+            {
+                this->tile_map->add_tile(this->mouse_pos_grid.x, this->mouse_pos_grid.y, 0, this->texture_rect);
+            }
+            else
+            {
+                this->texture_rect = this->texture_selector->get_texture_rect();
+            }
         }
     }
     else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->get_key_time())
     {   
-        if(!this->texture_selector->get_active())
+        if (!this->side_bar.getGlobalBounds().contains(sf::Vector2f(this->mouse_pose_window)))
         {
-            this->tile_map->remove_tile(this->mouse_pos_grid.x, this->mouse_pos_grid.y, 0);
+            if(!this->texture_selector->get_active())
+            {
+                this->tile_map->remove_tile(this->mouse_pos_grid.x, this->mouse_pos_grid.y, 0);
+            }
         }
     }
 }
@@ -146,6 +152,8 @@ void Editor_state::render_gui(sf::RenderTarget &target)
 
     this->texture_selector->render(target);
     target.draw(this->cursor_text);
+
+    target.draw(this->side_bar);
 }
 
 
@@ -154,6 +162,14 @@ void Editor_state::update_pause_menu_buttons()
     if (this->p_menu->is_button_pressed("EXIT_STATE") && this->get_key_time())
     {
         this->end_state();
+    }
+    if (this->p_menu->is_button_pressed("SAVE") && this->get_key_time())
+    {
+        this->tile_map->save_to_file("test.mp");
+    }
+    if (this->p_menu->is_button_pressed("LOAD") && this->get_key_time())
+    {
+        this->tile_map->load_from_file("test.mp");
     }
 }
 
@@ -191,10 +207,18 @@ void Editor_state::init_paused_menu()
     this->p_menu = new Pause_menu(*this->window, this->font);
     
     this->p_menu->add_button("EXIT_STATE", 800.f, "QUIT");
+    this->p_menu->add_button("SAVE", 700.f, "SAVE");
+    this->p_menu->add_button("LOAD", 500.f, "LOAD");
 }
 
 void Editor_state::init_gui()
 {
+
+    this->side_bar.setSize(sf::Vector2f(96.f , static_cast<float>(this->state_data->gfx_settings->resolution.height)));
+    this->side_bar.setFillColor(sf::Color(50, 50, 50, 100));
+    this->side_bar.setOutlineColor(sf::Color(200,200,200,150));
+    this->side_bar.setOutlineThickness(1.f);
+
     this->selector_rect.setSize(sf::Vector2f(this->state_data->grid_size, this->state_data->grid_size));
 
     this->selector_rect.setFillColor(sf::Color(255, 255, 255, 150));
@@ -204,12 +228,12 @@ void Editor_state::init_gui()
     this->selector_rect.setTexture(this->tile_map->get_tile_sheet());
     this->selector_rect.setTextureRect(this->texture_rect);
 
-    this->texture_selector = new gui::Texture_selector(500.f, 20.f, 512.f, 512.f, this->state_data->grid_size ,this->tile_map->get_tile_sheet());
+    this->texture_selector = new gui::Texture_selector(500.f, 20.f, 512.f, 512.f, this->state_data->grid_size ,this->tile_map->get_tile_sheet(), this->font, "TS");
 }
 
 void Editor_state::init_tile_map()
 {
-    this->tile_map = new Tile_map(this->state_data->grid_size, 10, 10);
+    this->tile_map = new Tile_map(this->state_data->grid_size, 10, 10, "assets/Map01.png");
 }
 
 void Editor_state::init_variables()
