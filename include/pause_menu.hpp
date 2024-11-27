@@ -10,7 +10,7 @@
             Pause_menu(sf::RenderWindow &window, sf::Font &font);
             virtual ~Pause_menu();
             
-            void update(const sf::Vector2f& mouse_pos);
+            void update(const sf::Vector2i& mouse_pos_window);
             void render(sf::RenderTarget& target);
             void add_button(const std::string key,float y, const std::string text);
             const bool is_button_pressed(const std::string key);

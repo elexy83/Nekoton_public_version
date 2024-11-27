@@ -39,10 +39,10 @@ Pause_menu::~Pause_menu()
     }
 }
 
-void Pause_menu::update(const sf::Vector2f& mouse_pos)
+void Pause_menu::update(const sf::Vector2i& mouse_pos_window)
 {
     for (auto &i : this->buttons)
-        i.second->update(mouse_pos);
+        i.second->update(mouse_pos_window);
 }
 
 void Pause_menu::render(sf::RenderTarget &target)

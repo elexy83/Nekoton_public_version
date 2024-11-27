@@ -56,7 +56,7 @@ void Settings_state::update_gui(const float &dt)
 {
     for (auto it : this->buttons)
     {
-        it.second->update(this->mouse_pose_view);
+        it.second->update(this->mouse_pose_window);
     }
 
     if (this->buttons["EXIT"]->is_pressed() && this->get_key_time())
@@ -72,7 +72,7 @@ void Settings_state::update_gui(const float &dt)
 
     for (auto it : this->drop_down_list)
     {
-        it.second->update(this->mouse_pose_view, dt);
+        it.second->update(this->mouse_pose_window, dt);
     }
 }
 

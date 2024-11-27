@@ -23,6 +23,9 @@
             void create_animation_component(sf::Texture &texture_sheet);
             void create_hitbox_component(sf::Sprite& sprite, float offset_x, float offset_y, float width, float height);
 
+
+            virtual const sf::Vector2f& get_position() const;
+
             void set_position(const float x, const float y);
 
         private:

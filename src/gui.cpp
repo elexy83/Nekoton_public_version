@@ -36,10 +36,10 @@ gui::button::~button()
 
 }
 
-void gui::button::update(const sf::Vector2f& mouse_pos)
+void gui::button::update(const sf::Vector2i &mouse_pos_window)
 {
     this->button_state = Btn_idle;
-    if (this->shape.getGlobalBounds().contains(mouse_pos)) {
+    if (this->shape.getGlobalBounds().contains(static_cast<sf::Vector2f>(mouse_pos_window))) {
         this->button_state = Btn_hover;
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -149,11 +149,11 @@ void gui::Drop_down_list::render(sf::RenderTarget &target)
     }
 }
 
-void gui::Drop_down_list::update(const sf::Vector2f &mouse_pos, const float& dt)
+void gui::Drop_down_list::update(const sf::Vector2i &mouse_pos_window, const float& dt)
 {
     this->update_key_time(dt);
 
-    this->active_element->update(mouse_pos);
+    this->active_element->update(mouse_pos_window);
     if (this->active_element->is_pressed() && this->get_key_time())
     {
         if (this->show_list)
@@ -168,7 +168,7 @@ void gui::Drop_down_list::update(const sf::Vector2f &mouse_pos, const float& dt)
     {
         for(auto &i : this->list)
         {
-            i->update(mouse_pos);
+            i->update(mouse_pos_window);
 
             if (i->is_pressed() && this->get_key_time())
             {
@@ -244,7 +244,7 @@ gui::Texture_selector::Texture_selector(float x, float y, float width, float hei
     this->selector.setSize(sf::Vector2f(grid_size, grid_size));
     this->selector.setFillColor(sf::Color::Transparent);
     this->selector.setOutlineThickness(1.f);
-    this->selector.setOutlineColor(sf::Color::Red);
+    this->selector.setOutlineColor(sf::Color::Blue);
 
     this->texture_rect.width = static_cast<int>(grid_size);
     this->texture_rect.height = static_cast<int>(grid_size);
@@ -263,7 +263,7 @@ gui::Texture_selector::~Texture_selector()
 void gui::Texture_selector::update(const sf::Vector2i& mouse_pos_window, const float& dt)
 {
     this->update_key_time(dt);
-    this->hide_btn->update(static_cast<sf::Vector2f>(mouse_pos_window));
+    this->hide_btn->update(mouse_pos_window);
 
     if (this->hide_btn->is_pressed() && this->get_key_time())
     {

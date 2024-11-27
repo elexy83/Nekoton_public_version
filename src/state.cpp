@@ -34,15 +34,22 @@ const bool state::get_key_time()
     return false;
 }
 
-void state::update_mouse_position()
+void state::update_mouse_position(sf::View* view)
 {
     this->mouse_pose_screen = sf::Mouse::getPosition();
     this->mouse_pose_window = sf::Mouse::getPosition(*this->window);
+
+    if(view)
+        this->window->setView(*view);
+    
     this->mouse_pose_view = this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window));
     this->mouse_pos_grid = sf::Vector2u(
         static_cast<unsigned>(this->mouse_pose_view.x) / static_cast<unsigned>(this->grid_size),
         static_cast<unsigned>(this->mouse_pose_view.y) / static_cast<unsigned>(this->grid_size)
     );
+
+    this->window->setView(this->window->getDefaultView());
+
 }
 
 void state::end_state()

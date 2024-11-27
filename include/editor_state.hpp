@@ -44,6 +44,12 @@
 
             sf::RectangleShape side_bar;
 
+            bool collision;
+            short type;
+
+            sf::View view;
+            float cam_speed;
+            void init_view();
             void init_key_binds();
             void init_font();
             void init_button();

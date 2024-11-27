@@ -13,7 +13,7 @@
             void update();
             void render(sf::RenderTarget& target);
 
-            void add_tile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& texture_rect);
+            void add_tile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& texture_rect, const bool &collision, const short &type);
             void remove_tile(const unsigned x, const unsigned y, const unsigned z);
 
             const sf::Texture* get_tile_sheet() const ;

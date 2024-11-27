@@ -52,7 +52,7 @@ void chose_character_3_state::update_button()
 {
     for (auto it : this->buttons)
     {
-        it.second->update(this->mouse_pose_view);
+        it.second->update(this->mouse_pose_window);
     }
 
     if (this->buttons["BACK"]->is_pressed() && this->get_key_time()) {

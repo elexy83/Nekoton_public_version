@@ -30,7 +30,7 @@
 
             virtual void update(const float &dt) = 0;
             virtual void render(sf::RenderTarget *target = nullptr) = 0;
-            virtual void update_mouse_position();
+            virtual void update_mouse_position(sf::View* view = NULL);
             virtual void update_input(const float &dt) = 0;
             void end_state();
             void pause_state();

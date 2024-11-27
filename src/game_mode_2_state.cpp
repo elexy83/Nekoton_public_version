@@ -3,10 +3,10 @@
 #include "../include/character_2.hpp"
 #include "../include/chose_character_2_state.hpp"
 
-
 game_mode_2_state::game_mode_2_state(State_data* state_data)
     :state(state_data)
 {
+    this->init_view();
     this->init_key_binds();
     this->init_font();
     this->init_texture();
@@ -25,18 +25,19 @@ game_mode_2_state::~game_mode_2_state()
 void game_mode_2_state::update(const float &dt)
 {
 
-    this->update_mouse_position();
+    this->update_mouse_position(&this->view);
     this->update_key_time(dt);
     this->update_input(dt);
 
     if (!this->paused)
     {
+        this->update_view(dt);
         this->update_player_input(dt); 
         this->Chara_2->update(dt);
     }
     else
     {
-        this->p_menu->update(this->mouse_pose_view);
+        this->p_menu->update(this->mouse_pose_window);
     }
 }
 
@@ -46,12 +47,14 @@ void game_mode_2_state::render(sf::RenderTarget* target)
         target = this->window;
     }
 
-    //this->map.render(*target);
+    target->setView(this->view);
+    this->tile_map->render(*target);
 
     this->Chara_2->render(*target);
 
     if (this->paused)
     {
+        target->setView(this->window->getDefaultView());
         this->p_menu->render(*target);
         this->update_pause_menu_buttons();
     }
@@ -80,6 +83,12 @@ void game_mode_2_state::update_pause_menu_buttons()
     {
         this->states->push(new chose_character_2_state(this->state_data));
     }
+}
+
+void game_mode_2_state::update_view(const float &dt)
+{
+   
+    this->view.setCenter(this->Chara_2->get_position());
 }
 
 void game_mode_2_state::update_input(const float &dt)
@@ -131,7 +140,8 @@ void game_mode_2_state::init_character()
 
 void game_mode_2_state::init_tile_map()
 {
-    this->tile_map = new Tile_map(this->state_data->grid_size, 10, 10, "assets/Map01.png");
+    this->tile_map = new Tile_map(this->state_data->grid_size, 30, 30, "assets/Map01.png");
+    this->tile_map->load_from_file("test.mp");
 }
 
 void game_mode_2_state::init_font()
@@ -139,4 +149,11 @@ void game_mode_2_state::init_font()
     if (!this->font.loadFromFile("fonts/Lato-Bold.ttf")) {
         throw("ERROR IN GAME_MODE_2_STATE : can not load font");
     }
+}
+
+void game_mode_2_state::init_view()
+{
+    this->view.setSize(sf::Vector2f(this->state_data->gfx_settings->resolution.width, this->state_data->gfx_settings->resolution.height));
+    this->view.setCenter(this->state_data->gfx_settings->resolution.width / 2.f,this->state_data->gfx_settings->resolution.height / 2.f);
+    this->view.zoom(0.5);
 }

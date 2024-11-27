@@ -17,6 +17,7 @@
             void update_input(const float &dt);
             void update_player_input(const float &dt);
             void update_pause_menu_buttons();
+            void update_view(const float &dt);
 
         private:
 
@@ -26,7 +27,12 @@
 
             Tile_map *tile_map;
 
+            sf::View view;
+            sf::RenderTexture render_texture;
+            sf::Sprite render_sprite;
+
             void init_font();
+            void init_view();
             void init_key_binds();
             void init_texture();
             void init_paused_menu();

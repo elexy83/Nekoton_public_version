@@ -2,7 +2,6 @@
 #include "../include/entity.hpp"
 
 
-
 entity::entity()
 {
     this->init_variables();
@@ -65,6 +64,11 @@ void entity::create_animation_component(sf::Texture &texture_sheet)
 void entity::create_hitbox_component(sf::Sprite &sprite, float offset_x, float offset_y, float width, float height)
 {
     this->hitbox_component = new Hitbox_component(sprite, offset_x, offset_y, width, height);
+}
+
+const sf::Vector2f &entity::get_position() const
+{
+    return this->sprite.getPosition();
 }
 
 void entity::set_position(const float x, const float y)

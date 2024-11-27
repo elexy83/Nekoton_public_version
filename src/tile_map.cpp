@@ -53,7 +53,7 @@ void Tile_map::render(sf::RenderTarget &target)
     }
 }
 
-void Tile_map::add_tile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect &texture_rect)
+void Tile_map::add_tile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect &texture_rect, const bool& collision, const short& type)
 {
     if (x < this->max_size.x && x >= 0 &&
         y < this->max_size.y && y >= 0 &&
@@ -61,7 +61,7 @@ void Tile_map::add_tile(const unsigned x, const unsigned y, const unsigned z, co
     {
         if (this->map[x][y][z] == NULL)
         {
-            this->map[x][y][z] = new Tile(x, y, this->grid_size_f, this->tile_sheet, texture_rect);
+            this->map[x][y][z] = new Tile(x, y, this->grid_size_f, this->tile_sheet, texture_rect, collision, type);
             std::cout << "DEBUG: ADDED TILE" << std::endl;
         }
     }
@@ -162,8 +162,8 @@ void Tile_map::load_from_file(const std::string file_name)
         unsigned z = 0;
         unsigned tr_x = 0;
         unsigned tr_y = 0;
-        bool collision;
-        short type;
+        bool collision = false;
+        short type = 0;
 
         //basics
         in_file >> size.x >> size.y >> grid_size >> layers >> texture_file;
