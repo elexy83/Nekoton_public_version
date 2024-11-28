@@ -6,9 +6,10 @@ character_2::character_2(float x, float y, sf::Texture &texture_sheet)
     this->init_variables();
 
     this->set_position(x, y);
+    this->sprite.setScale(0.30f, 0.30f);
 
-    this->create_hitbox_component(this->sprite, 0.f, 0.f, 90.f, 90.f);
-    this->create_movement_component(850.f, 800.f, 300.f);
+    this->create_hitbox_component(this->sprite, 5.f, 5.f, 90 * 0.2f, 90 * 0.25f);
+    this->create_movement_component(100.f, 50.f, 25.f);
     this->create_animation_component(texture_sheet);
 
     this->animation_component->add_animation("IDLE", 10.f, 0, 0, 0, 0, 90, 90);
@@ -47,13 +48,13 @@ void character_2::update_animation(const float &dt)
     else if (this->movement_component->get_state(MOVING_LEFT))
     {
         this->sprite.setOrigin(90.f, 0.f);
-        this->sprite.setScale(-1.f, 1.f);
+        this->sprite.setScale(-0.30f, 0.30f);
         this->animation_component->play("WALK", dt, this->movement_component->get_velocity().x, this->movement_component->get_max_velocity());
     }
     else if (this->movement_component->get_state(MOVING_RIGHT))
     {
         this->sprite.setOrigin(0.f, 0.f);
-        this->sprite.setScale(1.f, 1.f);
+        this->sprite.setScale(0.30f, 0.30f);
         this->animation_component->play("WALK", dt, this->movement_component->get_velocity().x, this->movement_component->get_max_velocity());
     }
     else if (this->movement_component->get_state(MOVING_UP))
@@ -77,6 +78,7 @@ void character_2::update_attack()
 void character_2::init_variables()
 {
     this->attaking = false;
+    
 }
 
 void character_2::init_component()

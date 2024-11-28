@@ -36,6 +36,7 @@
             sf::Text cursor_text;
 
             sf::RectangleShape selector_rect;
+            sf::RectangleShape map_rect;
             sf::IntRect texture_rect;
             
             std::map<std::string, gui::button*> buttons;
@@ -44,11 +45,14 @@
 
             sf::RectangleShape side_bar;
 
+            
+
             bool collision;
             short type;
+            float cam_speed;
 
             sf::View view;
-            float cam_speed;
+
             void init_view();
             void init_key_binds();
             void init_font();

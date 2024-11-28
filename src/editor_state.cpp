@@ -124,20 +124,18 @@ void Editor_state::update_editor_input(const float &dt)
     {
         this->view.move(0.f, -this->cam_speed * dt);
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->key_binds.at("MOVE_CAM_DOWN"))))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->key_binds.at("MOVE_CAM_DOWN"))))
     {
         this->view.move(0.f, this->cam_speed * dt);
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->key_binds.at("MOVE_CAM_LEFT"))))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->key_binds.at("MOVE_CAM_LEFT"))))
     {
         this->view.move(-this->cam_speed * dt, 0.f);
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->key_binds.at("MOVE_CAM_RIGHT"))))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->key_binds.at("MOVE_CAM_RIGHT"))))
     {
         this->view.move(this->cam_speed * dt, 0.f);
     }
-
-
 
     //add a tile to the tilemap
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->get_key_time())
@@ -213,6 +211,7 @@ void Editor_state::render_gui(sf::RenderTarget &target)
     target.draw(this->side_bar);
 
     target.setView(this->view);
+   // target.draw(this->map_rect);
     target.draw(this->cursor_text);
 }
 
@@ -236,11 +235,10 @@ void Editor_state::init_view()
 {
     this->view.setSize(sf::Vector2f(this->state_data->gfx_settings->resolution.width, this->state_data->gfx_settings->resolution.height));
     this->view.setCenter(this->state_data->gfx_settings->resolution.width/ 2.f, this->state_data->gfx_settings->resolution.height / 2.f);
+    this->view.zoom(0.75f);
 }
 
-
 void Editor_state::init_key_binds() 
-
 {
     std::ifstream ifs;
     ifs.open("Config/editor_keys");
@@ -286,16 +284,21 @@ void Editor_state::init_gui()
     this->side_bar.setOutlineColor(sf::Color(200,200,200,150));
     this->side_bar.setOutlineThickness(1.f);
 
-    this->selector_rect.setSize(sf::Vector2f(this->state_data->grid_size, this->state_data->grid_size));
 
+    this->selector_rect.setSize(sf::Vector2f(this->state_data->grid_size, this->state_data->grid_size));
     this->selector_rect.setFillColor(sf::Color(255, 255, 255, 150));
     this->selector_rect.setOutlineThickness(1.f);
     this->selector_rect.setOutlineColor(sf::Color::Green);
-
     this->selector_rect.setTexture(this->tile_map->get_tile_sheet());
     this->selector_rect.setTextureRect(this->texture_rect);
 
+    // this->map_rect.setSize(sf::Vector2f(this->state_data->grid_size, this->state_data->grid_size));
+    // this->map_rect.setFillColor(sf::Color::Transparent);
+    // this->map_rect.setOutlineThickness(1.f);
+    // this->map_rect.setOutlineColor(sf::Color::White);
+
     this->texture_selector = new gui::Texture_selector(1100.f, 20.f, 512.f, 512.f, this->state_data->grid_size ,this->tile_map->get_tile_sheet(), this->font, "TS");
+    
 }
 
 void Editor_state::init_tile_map()

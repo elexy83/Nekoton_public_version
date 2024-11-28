@@ -3,6 +3,7 @@
 #include "../include/character_2.hpp"
 #include "../include/chose_character_2_state.hpp"
 
+
 game_mode_2_state::game_mode_2_state(State_data* state_data)
     :state(state_data)
 {
@@ -34,6 +35,7 @@ void game_mode_2_state::update(const float &dt)
         this->update_view(dt);
         this->update_player_input(dt); 
         this->Chara_2->update(dt);
+        this->update_tile_map(dt);
     }
     else
     {
@@ -91,6 +93,12 @@ void game_mode_2_state::update_view(const float &dt)
     this->view.setCenter(this->Chara_2->get_position());
 }
 
+void game_mode_2_state::update_tile_map(const float &dt)
+{
+    this->tile_map->update();
+    this->tile_map->update_collision(this->Chara_2);
+}
+
 void game_mode_2_state::update_input(const float &dt)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->key_binds.at("Close"))) && this->get_key_time())
@@ -144,7 +152,7 @@ void game_mode_2_state::init_tile_map()
     this->tile_map->load_from_file("test.mp");
 }
 
-void game_mode_2_state::init_font()
+void game_mode_2_state::init_font() 
 {
     if (!this->font.loadFromFile("fonts/Lato-Bold.ttf")) {
         throw("ERROR IN GAME_MODE_2_STATE : can not load font");
@@ -155,5 +163,5 @@ void game_mode_2_state::init_view()
 {
     this->view.setSize(sf::Vector2f(this->state_data->gfx_settings->resolution.width, this->state_data->gfx_settings->resolution.height));
     this->view.setCenter(this->state_data->gfx_settings->resolution.width / 2.f,this->state_data->gfx_settings->resolution.height / 2.f);
-    this->view.zoom(0.5);
+    this->view.zoom(0.235f);
 }

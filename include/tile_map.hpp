@@ -2,6 +2,7 @@
     #define TILE_MAP_HPP
     
     #include "tile.hpp"
+    #include "entity.hpp"
 
     class Tile_map
     {
@@ -11,7 +12,7 @@
             virtual ~Tile_map();
 
             void update();
-            void render(sf::RenderTarget& target);
+            void render(sf::RenderTarget& target, entity* entity = NULL);
 
             void add_tile(const unsigned x, const unsigned y, const unsigned z, const sf::IntRect& texture_rect, const bool &collision, const short &type);
             void remove_tile(const unsigned x, const unsigned y, const unsigned z);
@@ -21,6 +22,8 @@
             void save_to_file(const std::string file_name);
             void load_from_file(const std::string file_name);
 
+            void update_collision(entity* entity);
+
         private:
 
             void clear();
@@ -29,8 +32,10 @@
             unsigned layers;
             std::string texture_file;
             std::vector<std::vector<std::vector<Tile *>>> map;
-            sf::Vector2u max_size;
+            sf::Vector2u max_size_world_grid;
+            sf::Vector2f max_size_world;
             sf::Texture tile_sheet;
+            sf::RectangleShape collision_box;
     };
 
 #endif

@@ -20,6 +20,8 @@
             void render(sf::RenderTarget& target);
 
             const std::string get_as_string() const;
+            const sf::Vector2f& get_position() const;
+            const bool &get_collision() const;
 
         private:
             

@@ -2,6 +2,7 @@
 #include "../include/tile.hpp"
 
 
+
 Tile::Tile()
 {
     this->collision = false;
@@ -46,4 +47,14 @@ const std::string Tile::get_as_string() const
 
     ss << this->shape.getTextureRect().left << " " << this->shape.getTextureRect().top << " " << this->collision << " " << this->type;
     return ss.str();
+}
+
+const sf::Vector2f &Tile::get_position() const
+{
+    return this->shape.getPosition();
+}
+
+const bool &Tile::get_collision() const
+{
+    return this->collision;
 }

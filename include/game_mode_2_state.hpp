@@ -18,6 +18,7 @@
             void update_player_input(const float &dt);
             void update_pause_menu_buttons();
             void update_view(const float &dt);
+            void update_tile_map(const float& dt);
 
         private:
 
