@@ -22,7 +22,11 @@ FILE = main.cpp \
 		pause_menu.cpp \
 		settings_state.cpp\
 		tile_map.cpp\
-		graphics_settings.cpp
+		graphics_settings.cpp \
+		home_2_state.cpp \
+		home_1_state.cpp \
+		home_3_state.cpp \
+		home_4_state.cpp
 
 		
 SRC = $(addprefix src/,$(FILE))

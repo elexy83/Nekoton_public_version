@@ -1,5 +1,7 @@
 #include "../include/stdafx.hpp"
 #include "../include/game_mode_1_state.hpp"
+#include "../include/home_1_state.hpp"
+#include "../include/chose_character_1_state.hpp"
 
 game_mode_1_state::game_mode_1_state(State_data* state_data) 
     :state(state_data)
@@ -11,7 +13,7 @@ game_mode_1_state::game_mode_1_state(State_data* state_data)
 
 game_mode_1_state::~game_mode_1_state()
 {
-    delete this->Dwarf;
+   
 }
 
 void game_mode_1_state::update(const float &dt)
@@ -26,8 +28,6 @@ void game_mode_1_state::render(sf::RenderTarget* target)
     if (!target) {
         target = this->window;
     }
-
-    this->Dwarf->render(*target);
 }
 
 void game_mode_1_state::update_input(const float &dt)
@@ -76,5 +76,5 @@ void game_mode_1_state:: init_texture()
 
 void game_mode_1_state::init_dwarf()
 {
-    this->Dwarf = new dwarf(100, 100, this->textures["dwarf_top"]);
+
 }

@@ -3,6 +3,7 @@
 #include "../include/chose_character_3_state.hpp"
 #include "../include/chose_character_2_state.hpp"
 #include "../include/main_menu_state.hpp"
+#include "../include/home_2_state.hpp"
 
 
 chose_character_2_state::chose_character_2_state(State_data* state_data)
@@ -60,7 +61,7 @@ void chose_character_2_state::update_button()
     }
 
     if (this->buttons["GAMEMODE_2_STATE"]->is_pressed() && this->get_key_time()) {
-        this->states->push(new game_mode_2_state(this->state_data));
+        this->states->push(new Home_2_state(this->state_data));
     }
 
     if (this->buttons["CHOOSE_GAMEMODE_1_STATE"]->is_pressed() && this->get_key_time()) {

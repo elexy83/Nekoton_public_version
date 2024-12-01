@@ -1,6 +1,7 @@
 #include "../include/stdafx.hpp"
 #include "../include/character_2.hpp"
 
+
 character_2::character_2(float x, float y, sf::Texture &texture_sheet)
 {
     this->init_variables();
@@ -8,13 +9,13 @@ character_2::character_2(float x, float y, sf::Texture &texture_sheet)
     this->set_position(x, y);
     this->sprite.setScale(0.30f, 0.30f);
 
-    this->create_hitbox_component(this->sprite, 5.f, 5.f, 90 * 0.2f, 90 * 0.25f);
+    this->create_hitbox_component(this->sprite, 5.f, 5.f, 15, 15);
     this->create_movement_component(100.f, 50.f, 25.f);
     this->create_animation_component(texture_sheet);
 
     this->animation_component->add_animation("IDLE", 10.f, 0, 0, 0, 0, 90, 90);
     this->animation_component->add_animation("WALK", 5.f, 0, 0, 0, 0, 90, 90);
-    this->animation_component->add_animation("ATTACK", 5.f, 0, 0, 3, 0, 90, 90);
+    this->animation_component->add_animation("ATTACK", 7.5f, 0, 0, 3, 0, 90, 90);
 }
 
 character_2::~character_2()
@@ -73,6 +74,12 @@ void character_2::update_attack()
     {
         this->attaking = true;
     }
+}
+
+void character_2::render(sf::RenderTarget &target)
+{
+    target.draw(this->sprite);
+    this->hitbox_component->render(target);
 }
 
 void character_2::init_variables()

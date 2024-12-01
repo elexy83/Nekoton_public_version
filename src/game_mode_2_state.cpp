@@ -1,12 +1,13 @@
 #include "../include/stdafx.hpp"
 #include "../include/game_mode_2_state.hpp"
-#include "../include/character_2.hpp"
+#include "../include/home_2_state.hpp"
 #include "../include/chose_character_2_state.hpp"
-
+#include "../include/character_2.hpp"
 
 game_mode_2_state::game_mode_2_state(State_data* state_data)
     :state(state_data)
 {
+    this->init_deffered_render();
     this->init_view();
     this->init_key_binds();
     this->init_font();
@@ -34,12 +35,13 @@ void game_mode_2_state::update(const float &dt)
     {
         this->update_view(dt);
         this->update_player_input(dt); 
-        this->Chara_2->update(dt);
         this->update_tile_map(dt);
+        this->Chara_2->update(dt);
     }
     else
     {
         this->p_menu->update(this->mouse_pose_window);
+        this->update_pause_menu_buttons();
     }
 }
 
@@ -48,18 +50,23 @@ void game_mode_2_state::render(sf::RenderTarget* target)
     if (!target) {
         target = this->window;
     }
+    this->render_texture.clear();
 
-    target->setView(this->view);
-    this->tile_map->render(*target);
+    this->render_texture.setView(this->view);
+    this->tile_map->render(this->render_texture, this->Chara_2);
 
-    this->Chara_2->render(*target);
+    this->Chara_2->render(this->render_texture);
 
     if (this->paused)
     {
-        target->setView(this->window->getDefaultView());
-        this->p_menu->render(*target);
-        this->update_pause_menu_buttons();
+        this->render_texture.setView(this->render_texture.getDefaultView());
+        this->p_menu->render(this->render_texture);   
     }
+
+    //final render
+    this->render_texture.display();
+    this->render_sprite.setTexture(this->render_texture.getTexture());
+    target->draw(this->render_sprite);
 }
 
 void game_mode_2_state::update_player_input(const float &dt)
@@ -83,7 +90,7 @@ void game_mode_2_state::update_pause_menu_buttons()
 {
     if (this->p_menu->is_button_pressed("EXIT_STATE")&& this->get_key_time())
     {
-        this->states->push(new chose_character_2_state(this->state_data));
+        this->states->push(new Home_2_state(this->state_data));
     }
 }
 
@@ -96,7 +103,7 @@ void game_mode_2_state::update_view(const float &dt)
 void game_mode_2_state::update_tile_map(const float &dt)
 {
     this->tile_map->update();
-    this->tile_map->update_collision(this->Chara_2);
+    this->tile_map->update_collision(this->Chara_2, dt);
 }
 
 void game_mode_2_state::update_input(const float &dt)
@@ -148,11 +155,18 @@ void game_mode_2_state::init_character()
 
 void game_mode_2_state::init_tile_map()
 {
-    this->tile_map = new Tile_map(this->state_data->grid_size, 30, 30, "assets/Map01.png");
+    this->tile_map = new Tile_map(this->state_data->grid_size, 20, 13, "assets/Map01.png");
     this->tile_map->load_from_file("test.mp");
 }
 
-void game_mode_2_state::init_font() 
+void game_mode_2_state::init_deffered_render()
+{
+    this->render_texture.create(this->state_data->gfx_settings->resolution.width, this->state_data->gfx_settings->resolution.height);
+    this->render_sprite.setTexture(this->render_texture.getTexture());
+    this->render_sprite.setTextureRect(sf::IntRect(0, 0, this->state_data->gfx_settings->resolution.width, this->state_data->gfx_settings->resolution.height));
+}
+
+void game_mode_2_state::init_font()
 {
     if (!this->font.loadFromFile("fonts/Lato-Bold.ttf")) {
         throw("ERROR IN GAME_MODE_2_STATE : can not load font");

@@ -33,7 +33,7 @@ void game::update()
 {
     this->poll_events();
 
-    if (!this->states.empty()) {
+    if (!this->states.empty() && this->window->hasFocus()) {
         this->states.top()->update(this->dt);
 
         if (this->states.top()->get_quit()) {

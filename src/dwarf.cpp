@@ -2,7 +2,6 @@
 #include "../include/dwarf.hpp"
 
 
-
 dwarf::dwarf(float x, float y, sf::Texture &texture)
 {
   
@@ -22,4 +21,9 @@ void dwarf::init_variables()
 void dwarf::init_component()
 {
     
+}
+
+void dwarf::render(sf::RenderTarget &target)
+{
+
 }

@@ -14,5 +14,7 @@
 
             void init_variables(); 
             void init_component();
+
+            void render(sf::RenderTarget& target);
     };
 #endif

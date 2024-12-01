@@ -31,7 +31,8 @@
             sf::View view;
             sf::RenderTexture render_texture;
             sf::Sprite render_sprite;
-
+            
+            void init_deffered_render();
             void init_font();
             void init_view();
             void init_key_binds();

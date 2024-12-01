@@ -303,7 +303,7 @@ void Editor_state::init_gui()
 
 void Editor_state::init_tile_map()
 {
-    this->tile_map = new Tile_map(this->state_data->grid_size, 30, 30, "assets/Map01.png");
+    this->tile_map = new Tile_map(this->state_data->grid_size, 20, 13, "assets/Map01.png");
 }
 
 void Editor_state::init_variables()

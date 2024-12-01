@@ -2,6 +2,9 @@
 #include "../include/entity.hpp"
 
 
+
+
+
 entity::entity()
 {
     this->init_variables();
@@ -22,11 +25,6 @@ void entity::update(const float &dt)
 
 void entity::render(sf::RenderTarget &target)
 {
-   
-    target.draw(this->sprite);
-
-    if (this->hitbox_component)
-        this->hitbox_component->render(target);
 
 }
 
@@ -45,6 +43,24 @@ void entity::move(const float &dt, const float dir_x, const float dir_y)
         this->movement_component->move(dir_x, dir_y, dt);
     }
 }
+
+void entity::stop_velocity()
+{
+    if (this->movement_component)
+    this->movement_component->stop_velocity();
+}
+
+void entity::stop_velocity_x()
+{
+    if (this->movement_component)
+        this->movement_component->stop_velocity_x();
+}
+
+void entity::stop_velocity_y()
+{
+    if (this->movement_component)
+        this->movement_component->stop_velocity_y();
+}  
 
 void entity::set_texture(sf::Texture &texture)
 {
@@ -68,10 +84,51 @@ void entity::create_hitbox_component(sf::Sprite &sprite, float offset_x, float o
 
 const sf::Vector2f &entity::get_position() const
 {
+    if (this->hitbox_component)
+    {
+        return this->hitbox_component->get_position();
+    }
+
     return this->sprite.getPosition();
+}
+
+const sf::FloatRect entity::get_global_bounds() const
+{
+    if(this->hitbox_component)
+        return this->hitbox_component->get_global_bounds();
+    return this->sprite.getGlobalBounds();
+}
+
+const sf::Vector2u entity::get_grid_position(const unsigned grid_size_u) const
+{
+    if(this->hitbox_component)
+    {
+        return sf::Vector2u(
+            static_cast<unsigned>(this->hitbox_component->get_position().x) / grid_size_u,
+            static_cast<unsigned>(this->hitbox_component->get_position().y) / grid_size_u);
+    }
+    return sf::Vector2u(
+        static_cast<unsigned>(this->sprite.getPosition().x) / grid_size_u,
+        static_cast<unsigned>(this->sprite.getPosition().y) / grid_size_u);
+}
+
+const sf::FloatRect &entity::get_next_position_bounds(const float &dt) const
+{
+    if(this->hitbox_component && this->movement_component)
+    {
+        return this->hitbox_component->get_next_position(this->movement_component->get_velocity() * dt);
+    }
+    return sf::FloatRect();
 }
 
 void entity::set_position(const float x, const float y)
 {
-    this->sprite.setPosition(x, y);
+    if (this->hitbox_component)
+    {
+        this->hitbox_component->set_position(x, y);
+    }
+    else
+    {
+        this->sprite.setPosition(x, y);
+    }
 }

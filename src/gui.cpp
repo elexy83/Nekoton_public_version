@@ -104,9 +104,6 @@ void gui::button::render(sf::RenderTarget &target)
 
 
 
-
-
-
 //===================================================================================
 
 gui::Drop_down_list::Drop_down_list(float x, float y, float width, float height, sf::Font& font, std::string list[], unsigned nb_element, unsigned default_index)
@@ -117,7 +114,7 @@ gui::Drop_down_list::Drop_down_list(float x, float y, float width, float height,
      this->active_element = new gui::button(x, y, width, height, &this->font,
             list[default_index], 15, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
 
-    for (size_t i = 0; i < nb_element; i++)
+    for (unsigned i = 0; i < nb_element; i++)
     {
         this->list.push_back(
             new gui::button(x, y + ((i+1) * height), width, height, &this->font,

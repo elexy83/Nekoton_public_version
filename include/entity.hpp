@@ -11,11 +11,13 @@
             entity();
             virtual ~entity();
 
-            virtual void update(const float &dt);
-            virtual void render(sf::RenderTarget &target);
-
+            virtual void update(const float &dt) = 0;
+            virtual void render(sf::RenderTarget &target) = 0;
             
             void move(const float &dt, const float dir_x, const float dir_y);
+            virtual void stop_velocity();
+            virtual void stop_velocity_x();
+            virtual void stop_velocity_y();
 
             void set_texture(sf::Texture &texture);
 
@@ -25,7 +27,9 @@
 
 
             virtual const sf::Vector2f& get_position() const;
-
+            virtual const sf::FloatRect get_global_bounds() const;
+            virtual const sf::Vector2u get_grid_position(const unsigned grid_size_u) const;
+            virtual const sf::FloatRect& get_next_position_bounds(const float &dt) const;
             void set_position(const float x, const float y);
 
         private:

@@ -2,7 +2,7 @@
     #define CHOSE_CHARACTER_1_STATE_HPP
     #include "gui.hpp"
     #include "graphics_settings.hpp"
-    #include "settings_state.hpp"
+    #include "game_mode_1_state.hpp"
 
     class chose_character_1_state : public state
     {

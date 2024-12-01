@@ -13,6 +13,8 @@
             void update_animation(const float &dt);
             void update_attack();
 
+            void render(sf::RenderTarget& target);
+
         private:
 
             void init_variables(); 

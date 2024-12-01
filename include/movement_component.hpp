@@ -1,9 +1,5 @@
 #ifndef MOVEMENT_COMPONENT_HPP
     #define MOVEMENT_COMPONENT_HPP
-    
-    
-
-
 
     enum movement_states {
         IDLE = 0,
@@ -22,6 +18,9 @@
             virtual ~Movement_component();
 
             const bool get_state(const short unsigned state) const;
+            void stop_velocity();
+            void stop_velocity_x();
+            void stop_velocity_y();
 
             void update(const float &dt);
             void move(const float dir_x, const float dir_y, const float &dt);

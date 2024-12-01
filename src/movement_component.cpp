@@ -2,6 +2,9 @@
 #include "../include/movement_component.hpp"
 
 
+
+
+
 Movement_component::Movement_component(sf::Sprite &sprite, float max_velocity, float acceleration, float deceleration)
     :sprite(sprite), max_velocity(max_velocity), acceleration(acceleration), deceleration(deceleration)
 {
@@ -62,6 +65,26 @@ const bool Movement_component::get_state(const short unsigned state) const
         break;
     }
     return false;
+}
+
+void Movement_component::stop_velocity()
+{
+    // reset the velocity to 0
+
+    this->velocity.x = 0.f;
+    this->velocity.y = 0.f;
+}
+
+void Movement_component::stop_velocity_x()
+{
+    // reset the velocity x to 0
+    this->velocity.x = 0.f;
+}
+
+void Movement_component::stop_velocity_y()
+{
+    // reset the velocity y to 0
+    this->velocity.y = 0.f;
 }
 
 void Movement_component::update(const float &dt)
