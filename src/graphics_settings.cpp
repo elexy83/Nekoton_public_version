@@ -8,7 +8,7 @@ Graphics_settings::Graphics_settings()
     this->resolution = sf::VideoMode::getDesktopMode();
     this->fullscreen = false;
     this->vsync = false;
-    this->framerate_limit = 240;
+    this->framerate_limit = 500;
     this->context_settings.antialiasingLevel = 0;
     this->video_modes = sf::VideoMode::getFullscreenModes();
 }

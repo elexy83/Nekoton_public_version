@@ -28,8 +28,8 @@
 
             virtual const sf::Vector2f& get_position() const;
             virtual const sf::FloatRect get_global_bounds() const;
-            virtual const sf::Vector2u get_grid_position(const unsigned grid_size_u) const;
-            virtual const sf::FloatRect& get_next_position_bounds(const float &dt) const;
+            virtual const sf::Vector2i get_grid_position(const int grid_size_i) const;
+            virtual const sf::FloatRect get_next_position_bounds(const float &dt) const;
             void set_position(const float x, const float y);
 
         private:

@@ -44,7 +44,7 @@
             sf::Vector2i mouse_pose_screen;
             sf::Vector2i mouse_pose_window;
             sf::Vector2f mouse_pose_view;
-            sf::Vector2u mouse_pos_grid;
+            sf::Vector2i mouse_pos_grid;
 
             State_data *state_data;
 

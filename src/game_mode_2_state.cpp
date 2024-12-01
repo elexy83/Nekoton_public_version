@@ -53,9 +53,11 @@ void game_mode_2_state::render(sf::RenderTarget* target)
     this->render_texture.clear();
 
     this->render_texture.setView(this->view);
-    this->tile_map->render(this->render_texture, this->Chara_2);
+    this->tile_map->render(this->render_texture, this->Chara_2->get_grid_position(static_cast<int>(this->state_data->grid_size)));
 
     this->Chara_2->render(this->render_texture);
+
+    this->tile_map->render_deffered(this->render_texture);
 
     if (this->paused)
     {
@@ -175,7 +177,12 @@ void game_mode_2_state::init_font()
 
 void game_mode_2_state::init_view()
 {
-    this->view.setSize(sf::Vector2f(this->state_data->gfx_settings->resolution.width, this->state_data->gfx_settings->resolution.height));
-    this->view.setCenter(this->state_data->gfx_settings->resolution.width / 2.f,this->state_data->gfx_settings->resolution.height / 2.f);
+    this->view.setSize(sf::Vector2f(
+            static_cast<float>(this->state_data->gfx_settings->resolution.width),
+            static_cast<float>(this->state_data->gfx_settings->resolution.height)));
+
+    this->view.setCenter(
+            static_cast<float>(this->state_data->gfx_settings->resolution.width) / 2.f,
+            static_cast<float>(this->state_data->gfx_settings->resolution.height) / 2.f);
     this->view.zoom(0.235f);
 }

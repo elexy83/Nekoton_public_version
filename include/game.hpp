@@ -9,7 +9,7 @@
             game();
             virtual ~game(); 
 
-            const bool runnnig();
+            void run();
 
 
             void update();

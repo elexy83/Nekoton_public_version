@@ -6,7 +6,8 @@
     enum Tile_type
     {
         DEFFAULT = 0,
-        DAMAGING
+        DAMAGING,
+        DOODAD
     };
 
     class Tile
@@ -24,6 +25,8 @@
             const bool intersect(const sf::FloatRect bounds) const;
             const bool &get_collision() const;
             const sf::FloatRect get_global_bounds() const;
+            //accessors
+            const short &get_type() const;
 
         private:
             

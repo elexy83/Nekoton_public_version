@@ -45,7 +45,7 @@
 
             sf::RectangleShape side_bar;
 
-            
+            int layer;
 
             bool collision;
             short type;

@@ -9,8 +9,8 @@ character_2::character_2(float x, float y, sf::Texture &texture_sheet)
     this->set_position(x, y);
     this->sprite.setScale(0.30f, 0.30f);
 
-    this->create_hitbox_component(this->sprite, 5.f, 5.f, 15, 15);
-    this->create_movement_component(100.f, 50.f, 25.f);
+    this->create_hitbox_component(this->sprite, 5, 5, 18, 20);
+    this->create_movement_component(100.f, 5000.f, 2500.f);
     this->create_animation_component(texture_sheet);
 
     this->animation_component->add_animation("IDLE", 10.f, 0, 0, 0, 0, 90, 90);

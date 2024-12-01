@@ -229,12 +229,12 @@ gui::Texture_selector::Texture_selector(float x, float y, float width, float hei
 
     if (this->sheet.getGlobalBounds().width > this->bounds.getGlobalBounds().width)
     {
-        this->sheet.setTextureRect(sf::IntRect(0, 0, this->bounds.getGlobalBounds().width, this->sheet.getGlobalBounds().height));
+        this->sheet.setTextureRect(sf::IntRect(0, 0, this->bounds.getGlobalBounds().width, static_cast<int>(this->sheet.getGlobalBounds().height)));
     }
 
     if (this->sheet.getGlobalBounds().height > this->bounds.getGlobalBounds().height)
     {
-        this->sheet.setTextureRect(sf::IntRect(0, 0, this->bounds.getGlobalBounds().height, this->sheet.getGlobalBounds().width));
+        this->sheet.setTextureRect(sf::IntRect(0, 0, this->bounds.getGlobalBounds().height, static_cast<int>(this->sheet.getGlobalBounds().width)));
     }
 
     this->selector.setPosition(x, y);

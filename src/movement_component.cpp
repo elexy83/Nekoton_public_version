@@ -89,7 +89,6 @@ void Movement_component::stop_velocity_y()
 
 void Movement_component::update(const float &dt)
 {
-
     if (this->velocity.x > 0.f)
     {
 
@@ -98,7 +97,7 @@ void Movement_component::update(const float &dt)
 
         
 
-        this->velocity.x -= deceleration;
+        this->velocity.x -= deceleration * dt;
         if (this->velocity.x < 0.f)
             this->velocity.x = 0.f;
 
@@ -109,7 +108,7 @@ void Movement_component::update(const float &dt)
         if (this->velocity.x < -this->max_velocity)
             this->velocity.x = -this->max_velocity;
         
-        this->velocity.x += deceleration;
+        this->velocity.x += deceleration * dt;
         if (this->velocity.x > 0.f)
             this->velocity.x = 0.f; 
     }
@@ -123,7 +122,7 @@ void Movement_component::update(const float &dt)
 
         
 
-        this->velocity.y -= deceleration;
+        this->velocity.y -= deceleration * dt;
         if (this->velocity.y < 0.f)
             this->velocity.y = 0.f;
 
@@ -134,7 +133,7 @@ void Movement_component::update(const float &dt)
         if (this->velocity.y < -this->max_velocity)
             this->velocity.y = -this->max_velocity;
         
-        this->velocity.y += deceleration;
+        this->velocity.y += deceleration * dt;
         if (this->velocity.y > 0.f)
             this->velocity.y = 0.f;
     }
@@ -146,8 +145,8 @@ void Movement_component::update(const float &dt)
 void Movement_component::move(const float dir_x, const float dir_y, const float &dt)
 {
  
-    this->velocity.x += this->acceleration * dir_x;
-    this->velocity.y += this->acceleration * dir_y;
+    this->velocity.x += this->acceleration * dir_x * dt;
+    this->velocity.y += this->acceleration * dir_y * dt;
 }
 
 const sf::Vector2f &Movement_component::get_velocity() const

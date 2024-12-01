@@ -3,6 +3,7 @@
 
 
 
+
 Tile::Tile()
 {
     this->collision = false;
@@ -64,4 +65,8 @@ const bool &Tile::get_collision() const
 const sf::FloatRect Tile::get_global_bounds() const
 {
     return this->shape.getGlobalBounds();
+}
+const short &Tile::get_type() const
+{
+    return this->type;
 }

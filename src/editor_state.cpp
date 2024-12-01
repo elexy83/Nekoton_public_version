@@ -58,7 +58,7 @@ void Editor_state::render(sf::RenderTarget* target)
     }
 
     target->setView(this->view);
-    this->tile_map->render(*target);
+    this->tile_map->render_editor(*target, this->mouse_pos_grid);
 
     target->setView(this->window->getDefaultView());
     this->render_button(*target);
@@ -102,7 +102,8 @@ void Editor_state::update_gui(const float& dt)
         "\n" << this->mouse_pos_grid.x << " " << this->mouse_pos_grid.y <<
         "\n" << this->texture_rect.left << " " << this->texture_rect.top <<
         "\n" << "collision: " << this->collision << 
-        "\n" << "type: "<< this->type;
+        "\n" << "type: " << this->type <<
+        "\n" << "tiles: " << this->tile_map->get_layer_size(this->mouse_pos_grid.x, this->mouse_pos_grid.y, this->layer);
     this->cursor_text.setString(ss.str());    
 }
 
@@ -211,7 +212,6 @@ void Editor_state::render_gui(sf::RenderTarget &target)
     target.draw(this->side_bar);
 
     target.setView(this->view);
-   // target.draw(this->map_rect);
     target.draw(this->cursor_text);
 }
 
@@ -233,8 +233,14 @@ void Editor_state::update_pause_menu_buttons()
 
 void Editor_state::init_view()
 {
-    this->view.setSize(sf::Vector2f(this->state_data->gfx_settings->resolution.width, this->state_data->gfx_settings->resolution.height));
-    this->view.setCenter(this->state_data->gfx_settings->resolution.width/ 2.f, this->state_data->gfx_settings->resolution.height / 2.f);
+    this->view.setSize(sf::Vector2f(
+            static_cast<float>(this->state_data->gfx_settings->resolution.width),
+            static_cast<float>(this->state_data->gfx_settings->resolution.height))
+        );
+
+    
+    this->view.setCenter(static_cast<float>(this->state_data->gfx_settings->resolution.width) / 2.f,
+                         static_cast<float>(this->state_data->gfx_settings->resolution.height) / 2.f);
     this->view.zoom(0.75f);
 }
 
@@ -312,6 +318,7 @@ void Editor_state::init_variables()
     this->collision = false;
     this->type = Tile_type::DEFFAULT;
     cam_speed = 300.f;
+    this->layer = 0;
 }
 
 void Editor_state::init_text()

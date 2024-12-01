@@ -8,10 +8,7 @@ int main()
 
     game game;
 
-    while(game.runnnig()) {
-        game.update_dt();
-        game.update();
-        game.render();
-    }
+    game.run();
+
     return 0;
 }

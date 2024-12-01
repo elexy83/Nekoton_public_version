@@ -22,27 +22,36 @@ game::~game()
     }
 }
 
-
-
-const bool game::runnnig()
+void game::run()
 {
-    return this->window->isOpen();
+    while (this->window->isOpen())
+    {
+        this->update_dt();
+        this->update();
+        this->render();
+    }
 }
 
 void game::update()
 {
     this->poll_events();
 
-    if (!this->states.empty() && this->window->hasFocus()) {
-        this->states.top()->update(this->dt);
-
-        if (this->states.top()->get_quit()) {
-            this->states.top()->end_state();
-            delete this->states.top();
-            this->states.pop();
+    if (!this->states.empty()) 
+    {
+        if (this->window->hasFocus())
+        {
+            this->states.top()->update(this->dt);
+            
+            if (this->states.top()->get_quit())
+            {
+                this->states.top()->end_state();
+                delete this->states.top();
+                this->states.pop();
+            }
         }
-        
-    } else {
+    }
+    else
+    {
         this->window->close();
     }
 }
@@ -57,7 +66,8 @@ void game::render()
     
     this->window->clear(sf::Color::Black);
 
-    if (!this->states.empty()) {
+    if (!this->states.empty())
+    {
         this->states.top()->render();
     }
     
@@ -67,7 +77,8 @@ void game::render()
 
 void game::poll_events()
 {
-    while(this->window->pollEvent(this->event)) {
+    while(this->window->pollEvent(this->event))
+    {
         switch (this->event.type) 
         {
             case sf::Event::Closed:
@@ -117,11 +128,13 @@ void game::init_keys()
     std::ifstream ifs;
     ifs.open("Config/supported_keys");
 
-    if (ifs.is_open()) {
+    if (ifs.is_open())
+    {
         std::string key = "";
         int key_value = 0;
 
-        while (ifs >> key >> key_value) {
+        while (ifs >> key >> key_value)
+        {
             this->supported_keys[key] = key_value;
         }
     }
