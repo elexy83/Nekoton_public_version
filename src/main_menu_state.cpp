@@ -102,14 +102,32 @@ void main_menu_state::init_font()
 
 void main_menu_state::init_button()
 {
-    this->buttons["CHOSE_STATE"] = new gui::button(680.f, 400.f, 550.f, 150.f, &this->font,
-        "PLAY", 30, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
+    this->buttons["CHOSE_STATE"] = new gui::button(
+        this->state_data->gfx_settings->resolution.width * 0.35416, 
+        this->state_data->gfx_settings->resolution.height * 0.37037,
+        this->state_data->gfx_settings->resolution.width * 0.28645,
+        this->state_data->gfx_settings->resolution.height * 0.13888,
+        &this->font, "PLAY",
+        this->state_data->gfx_settings->resolution.width * 0.015625,
+        sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
 
-    this->buttons["SETTINGS_STATE"] = new gui::button(680.f, 600.f, 550.f, 150.f, &this->font,
-        "SETTINGS", 25, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
+    this->buttons["SETTINGS_STATE"] = new gui::button(
+        this->state_data->gfx_settings->resolution.width * 0.35416,
+        this->state_data->gfx_settings->resolution.height * 0.5555,
+        this->state_data->gfx_settings->resolution.width * 0.28645,
+        this->state_data->gfx_settings->resolution.height * 0.13888,
+        &this->font, "SETTINGS",
+        this->state_data->gfx_settings->resolution.width * 0.01302,
+        sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
 
-    this->buttons["EXIT"] = new gui::button(680.f, 800.f, 550.f, 150.f, &this->font,
-       "QUIT", 25, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
+    this->buttons["EXIT"] = new gui::button(
+        this->state_data->gfx_settings->resolution.width * 0.35416,
+        this->state_data->gfx_settings->resolution.height * 0.74074,
+        this->state_data->gfx_settings->resolution.width * 0.28645,
+        this->state_data->gfx_settings->resolution.height * 0.13888,
+        &this->font, "QUIT",
+        this->state_data->gfx_settings->resolution.width * 0.01302,
+        sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
 
     this->buttons["EDITOR_STATE"] = new gui::button(1500.f, 0.f, 200.f, 50.f, &this->font,
        "EDITOR", 10, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));

@@ -16,7 +16,7 @@ state::state(State_data* state_data)
 
 state::~state()
 {
-
+    
 }
 
 const bool &state::get_quit() const

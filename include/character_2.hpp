@@ -14,6 +14,7 @@
             void update_attack();
 
             void render(sf::RenderTarget& target);
+            void render_hitbox(sf::RenderTarget &target);
 
         private:
 

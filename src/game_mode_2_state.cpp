@@ -147,7 +147,7 @@ void game_mode_2_state::init_paused_menu()
 {
     this->p_menu = new Pause_menu(*this->window, this->font);
     
-    this->p_menu->add_button("EXIT_STATE", 800.f, "QUIT");
+    this->p_menu->add_button("EXIT_STATE", this->state_data->gfx_settings->resolution.width * 0.41666, "QUIT");
 }
 
 void game_mode_2_state::init_character()

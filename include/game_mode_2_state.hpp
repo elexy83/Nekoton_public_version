@@ -31,6 +31,8 @@
             sf::View view;
             sf::RenderTexture render_texture;
             sf::Sprite render_sprite;
+
+            bool dev_hitbox;
             
             void init_deffered_render();
             void init_font();

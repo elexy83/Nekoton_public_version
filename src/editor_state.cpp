@@ -34,6 +34,7 @@ void Editor_state::update(const float &dt)
     this->update_mouse_position(&this->view);
     this->update_key_time(dt);
     this->update_input(dt);
+    
 
     if(!this->paused) //unpaused
     {

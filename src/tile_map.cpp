@@ -107,11 +107,11 @@ void Tile_map::render(sf::RenderTarget &target, const sf::Vector2i &grid_positio
                 {
                     this->map[x][y][this->layer][k]->render(target);
                 }
-                if (this->map[x][y][this->layer][k]->get_collision())
-                {
-                    this->collision_box.setPosition(this->map[x][y][this->layer][k]->get_position());
-                    target.draw(this->collision_box);
-                }
+                // if (this->map[x][y][this->layer][k]->get_collision())
+                // {
+                //     this->collision_box.setPosition(this->map[x][y][this->layer][k]->get_position());
+                //     target.draw(this->collision_box);
+                // }
             }
         }
     }

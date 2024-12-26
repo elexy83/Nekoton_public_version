@@ -9,8 +9,9 @@ character_2::character_2(float x, float y, sf::Texture &texture_sheet)
     this->set_position(x, y);
     this->sprite.setScale(0.30f, 0.30f);
 
-    this->create_hitbox_component(this->sprite, 5, 5, 18, 20);
-    this->create_movement_component(100.f, 5000.f, 2500.f);
+
+    this->create_hitbox_component(this->sprite, 0, 5, 25, 23);
+    this->create_movement_component(100.f, 50.f, 25.f);
     this->create_animation_component(texture_sheet);
 
     this->animation_component->add_animation("IDLE", 10.f, 0, 0, 0, 0, 90, 90);
@@ -25,7 +26,7 @@ character_2::~character_2()
 
 void character_2::update(const float &dt)
 {
-    
+
     this->movement_component->update(dt);
 
     this->update_attack();
@@ -80,6 +81,11 @@ void character_2::render(sf::RenderTarget &target)
 {
     target.draw(this->sprite);
     this->hitbox_component->render(target);
+}
+
+void character_2::render_hitbox(sf::RenderTarget &target)
+{
+   // this->hitbox_component->render(target);
 }
 
 void character_2::init_variables()

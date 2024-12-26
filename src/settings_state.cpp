@@ -115,13 +115,23 @@ void Settings_state::init_font()
 void Settings_state::init_gui()
 {
     this->buttons["EXIT"] = new gui::button(
-        0.f, 0.f, 150.f, 50.f, &this->font,
-       "BACK", 25, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200)
+        0.f,
+        0.f,
+        this->state_data->gfx_settings->resolution.width * 0.078125,
+        this->state_data->gfx_settings->resolution.height * 0.04629,
+        &this->font, "BACK",
+        this->state_data->gfx_settings->resolution.width * 0.01302,
+        sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200)
     );
-
+    
     this->buttons["APPLY"] = new gui::button(
-        800.f, 0.f, 250.f, 50.f, &this->font,
-       "APPLY", 25, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200)
+        this->state_data->gfx_settings->resolution.width * 0.41666,
+        0.f,
+        this->state_data->gfx_settings->resolution.width * 0.13020,
+        this->state_data->gfx_settings->resolution.height * 0.04629,
+        &this->font, "APPLY",
+        this->state_data->gfx_settings->resolution.width * 0.01302,
+        sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200)
     );
 
     std::vector<std::string> modes_str;
@@ -131,7 +141,12 @@ void Settings_state::init_gui()
         modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
     }
     
-    this->drop_down_list["RESOLUTION"] = new gui::Drop_down_list(800, 200, 150, 50, font, modes_str.data(), modes_str.size());
+    this->drop_down_list["RESOLUTION"] = new gui::Drop_down_list(
+        this->state_data->gfx_settings->resolution.width * 0.41666,
+        this->state_data->gfx_settings->resolution.height * 0.18518,
+        this->state_data->gfx_settings->resolution.width * 0.078125,
+        this->state_data->gfx_settings->resolution.height * 0.04629,
+        font, modes_str.data(), modes_str.size());
 }
 
 void Settings_state::init_text()

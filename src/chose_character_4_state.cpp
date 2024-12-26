@@ -106,15 +106,39 @@ void chose_character_4_state::init_font()
 
 void chose_character_4_state::init_button()
 {
-    this->buttons["GAMEMODE_4_STATE"] = new gui::button(950.f, 200.f, 550.f, 150.f, &this->font,
-        "NEW GAME 4", 25, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
+    this->buttons["GAMEMODE_4_STATE"] = new gui::button(
+        this->state_data->gfx_settings->resolution.width * 0.49479,
+        this->state_data->gfx_settings->resolution.height * 0.18518, 
+        this->state_data->gfx_settings->resolution.width * 0.28645,
+        this->state_data->gfx_settings->resolution.height *0.13888,
+        &this->font, "NEW GAME 4",
+        this->state_data->gfx_settings->resolution.width * 0.01302,
+        sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
 
-    this->buttons["CHOOSE_GAMEMODE_3_STATE"] = new gui::button(0.f, 450.f, 100.f, 100.f, &this->font,
-        "<", 25, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
+    this->buttons["CHOOSE_GAMEMODE_1_STATE"] = new gui::button(
+        this->state_data->gfx_settings->resolution.width * 0.94791,
+        this->state_data->gfx_settings->resolution.height * 0.41666,
+        this->state_data->gfx_settings->resolution.width * 0.05208,
+        this->state_data->gfx_settings->resolution.height * 0.09259,
+        &this->font, ">",
+        this->state_data->gfx_settings->resolution.width * 0.01302,
+        sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
 
-    this->buttons["CHOOSE_GAMEMODE_1_STATE"] = new gui::button(1820.f, 450.f, 100.f, 100.f, &this->font,
-        ">", 25, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
+    this->buttons["CHOOSE_GAMEMODE_3_STATE"] = new gui::button(
+        0.f,
+        this->state_data->gfx_settings->resolution.height * 0.41666,
+        this->state_data->gfx_settings->resolution.width * 0.05208,
+        this->state_data->gfx_settings->resolution.height * 0.09259,
+        &this->font, "<",
+        this->state_data->gfx_settings->resolution.width * 0.01302,
+        sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
 
-    this->buttons["BACK"] = new gui::button(0.f, 0.f, 150.f, 50.f, &this->font,
-        "BACK", 20, sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
+    this->buttons["BACK"] = new gui::button(
+        0.f,
+        0.f,
+        this->state_data->gfx_settings->resolution.width * 0.078125,
+        this->state_data->gfx_settings->resolution.height * 0.04629,
+        &this->font, "BACK",
+        this->state_data->gfx_settings->resolution.width * 0.01302,
+        sf::Color(70,70,70,200), sf::Color(150,150,150,200), sf::Color(20,20,20,200));
 }
